@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css'
 import ProfileCard from './ProfileCard';
+import Login from './login';
+// import Profile from './Profile';
 
 const App: React.FC = () => {
   const [profile, setProfile] = useState<any | null>(null);
@@ -12,6 +14,19 @@ const App: React.FC = () => {
     name: "Nome do Usuário",
     profilePicture: "url_da_foto.jpg",
     totalGames: 2
+  };
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+
+  const handleLogin = (user) => {
+    setIsLoggedIn(true);
+    setUsername(user);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUsername('');
   };
 
 
@@ -60,6 +75,11 @@ const App: React.FC = () => {
 
   return (
       <div className="App">
+        {isLoggedIn ? (
+        <Profile username={username} onLogout={handleLogout} />
+      ) : (
+        <Login onLogin={handleLogin} />
+      )}
       <div className="profile-card">
       <img src={profile.avatarfull} alt="Avatar" className="profile-picture" />
       <div className="user-info">
